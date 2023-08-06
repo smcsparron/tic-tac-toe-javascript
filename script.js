@@ -10,6 +10,7 @@ const gameBoard = (() => {
   const resetGame = () => {
     board = ["", "", "", "", "", "", "", "", ""];
     gameController.setGameOver(false);
+    displayController.showWinner('');
     displayController.render();
   }
 
@@ -72,12 +73,14 @@ const gameController = (() => {
     const winner = checkWinner();
 
     if (winner) {
+      gameOver = true;
       if (winner === 'tie') {
+        displayController.showWinner("TIE")
         console.log("TIE")
       } else {
+        displayController.showWinner(`Player ${winner} wins!`)
         console.log(`Player ${winner} wins!`)
       }
-      gameOver = true;
     }
   }
 
@@ -104,12 +107,17 @@ const displayController = (() => {
       square.addEventListener('click', () => gameController.playTurn(index));
       gameContainer.appendChild(square);
     })
+
   }
 
-  const showWinner = document.getElementById("winner");
-  displayController.showWinner.insertAdjacentText("beforeend", "TIE")
+  const showWinner = (winner) => {
+    const displayWinner = document.getElementById("winner")
+    console.log(winner)
+    displayWinner.textContent = `${winner}`
+  }
 
-  return {render}
+
+  return {render, showWinner}
 
 })();
 
