@@ -1,7 +1,7 @@
 const gameBoard = (() => {
   let board = ["", "", "", "", "", "", "", "", ""];
 
-  const getBoard = () => board
+  const getBoard = () => board;
 
   const setSquare = (index, value) => {
     board[index] = value;
@@ -10,24 +10,22 @@ const gameBoard = (() => {
   const resetGame = () => {
     board = ["", "", "", "", "", "", "", "", ""];
     gameController.setGameOver(false);
-    displayController.showWinner('');
+    displayController.showWinner("");
     displayController.render();
-  }
+  };
 
-  return {getBoard, setSquare, resetGame};
-
+  return { getBoard, setSquare, resetGame };
 })();
 
 const playerFactory = (name, symbol) => {
   const getName = () => name;
   const getSymbol = () => symbol;
 
-  return {getName, getSymbol};
+  return { getName, getSymbol };
 };
 
 const player1 = playerFactory("Player 1", "X");
 const player2 = playerFactory("Player 2", "O");
-
 
 const gameController = (() => {
   let currentPlayer = player1;
@@ -40,7 +38,7 @@ const gameController = (() => {
     [1, 4, 7],
     [2, 5, 8],
     [0, 4, 8],
-    [2, 4, 6]
+    [2, 4, 6],
   ];
 
   const checkWinner = () => {
@@ -53,12 +51,12 @@ const gameController = (() => {
       }
     }
 
-    if (board.every(cell => cell !== "")) {
+    if (board.every((cell) => cell !== "")) {
       return "tie";
     }
 
     return null;
-  }
+  };
 
   const playTurn = (index) => {
     if (gameOver) return;
@@ -74,19 +72,19 @@ const gameController = (() => {
 
     if (winner) {
       gameOver = true;
-      if (winner === 'tie') {
-        displayController.showWinner("TIE")
-        console.log("TIE")
+      if (winner === "tie") {
+        displayController.showWinner("TIE");
+        console.log("TIE");
       } else {
-        displayController.showWinner(`Player ${winner} wins!`)
-        console.log(`Player ${winner} wins!`)
+        displayController.showWinner(`Player ${winner} wins!`);
+        console.log(`Player ${winner} wins!`);
       }
     }
-  }
+  };
 
   const setGameOver = (value) => {
     gameOver = value;
-  }
+  };
 
   return { playTurn, setGameOver };
 })();
@@ -94,36 +92,32 @@ const gameController = (() => {
 
 const displayController = (() => {
   const render = () => {
-    let board = gameBoard.getBoard()
-    const gameContainer = document.getElementById("game-container")
+    let board = gameBoard.getBoard();
+    const gameContainer = document.getElementById("game-container");
 
-    gameContainer.innerHTML = '';
+    gameContainer.innerHTML = "";
 
     board.forEach((cell, index) => {
-      const square = document.createElement('div');
-      square.classList.add("square")
-      square.setAttribute("id", index)
+      const square = document.createElement("div");
+      square.classList.add("square");
+      square.setAttribute("id", index);
       square.textContent = cell;
-      square.addEventListener('click', () => gameController.playTurn(index));
+      square.addEventListener("click", () => gameController.playTurn(index));
       gameContainer.appendChild(square);
-    })
-
-  }
+    });
+  };
 
   const showWinner = (winner) => {
-    const displayWinner = document.getElementById("winner")
-    console.log(winner)
-    displayWinner.textContent = `${winner}`
-  }
+    const displayWinner = document.getElementById("winner");
+    console.log(winner);
+    displayWinner.textContent = `${winner}`;
+  };
 
-
-  return {render, showWinner}
-
+  return { render, showWinner };
 })();
 
 
-const resetButton = document.getElementById("btn-reset")
-resetButton.addEventListener("click", gameBoard.resetGame)
-
+const resetButton = document.getElementById("btn-reset");
+resetButton.addEventListener("click", gameBoard.resetGame);
 
 displayController.render();
