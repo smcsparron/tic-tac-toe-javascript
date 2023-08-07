@@ -1,3 +1,7 @@
+import { player1, player2 } from './player.js';
+import gameBoard from './gameBoard.js';
+import displayController from './displayController.js';
+
 const gameController = (() => {
   let currentPlayer = player1;
   let gameOver = false;
@@ -15,7 +19,7 @@ const gameController = (() => {
   const checkWinner = () => {
     const board = gameBoard.getBoard();
 
-    for (condition of winConditions) {
+    for (const condition of winConditions) {
       const [a, b, c] = condition;
       if (board[a] && board[a] === board[b] && board[a] === board[c]) {
         return board[a];
@@ -43,12 +47,11 @@ const gameController = (() => {
 
     if (winner) {
       gameOver = true;
+      currentPlayer = player1;
       if (winner === "tie") {
-        displayController.showWinner("TIE");
-        console.log("TIE");
+        displayController.showWinner("Tie!");
       } else {
-        displayController.showWinner(`Player ${winner} wins!`);
-        console.log(`Player ${winner} wins!`);
+        displayController.showWinner(`${winner} Wins!`);
       }
     }
   };
@@ -59,3 +62,6 @@ const gameController = (() => {
 
   return { playTurn, setGameOver };
 })();
+
+
+export default gameController;

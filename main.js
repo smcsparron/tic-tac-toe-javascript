@@ -1,7 +1,5 @@
-
-
-
-
+import gameBoard from './modules/gameBoard.js';
+import displayController from './modules/displayController.js';
 
 
 
